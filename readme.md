@@ -13,12 +13,15 @@ Nghe có vẻ hơi chung chung nhỉ, nhưng đây là phương pháp tốt nh�
 Bọn mình đã sử dụng một model có tuổi đời khá cao là Unet để segment tất tần tật mọi thứ mình cần quan tâm trong vòng sơ loại: Đường đi, line đường, biển báo, vật cản, và những thứ còn lại, chi tiết về output của quá trình này thì mình sẽ trình bày sau.
 
 Nhưng mà để ra được ảnh đầu ra như thế này không phải là một câu chuyện đơn giản, trước đây thì bọn mình chỉ segment ra "đường đi được" và dùng loss là iou, thì mình có được một cái đầu ra khá là đẹp đẽ và sắc nét:
+
 ![Road Segmentation](images/road_segmentation.gif)
 
 Nhưng khi chúng mình bắt đầu thêm những class khác vd như biển bảo hay đường đi được vào để train thì đầu vào của chúng mình thuộc dạng "hên xui", đó là tại vì vấn đề class imbalance khá cao trong dữ liệu train, khi mà với 1000 ảnh thì chúng ta có 1000 cái nhãn của đường đi, 20 ảnh của vật cản và 50 ảnh của biển báo. Vậy nên bọn mình đã đưa ra giải pháp là sử dụng một hàm loss khác, tên là weighted-categorical-crossentropy, các bạn có thể tìm hiểu sâu hơn về hàm loss này nhưng ở đây thì chúng ta sẽ hiểu là đây là một hàm loss có weight cho từng class, vậy thì hiểu nôm na là chúng ta sẽ hướng sự "quan tâm" của quá trình train đến với những cái class có số lượng ít khiến cho chúng khỏi bị "lãng quên". Sau khi áp dùng hàm loss này thì chúng mình đã có được một output có đầy đủ các class mà chúng mình mong muốn, nhưng vấn đề là chúng không còn được sắc nét như khi sử dụng hàm loss là iou, ví dụ như ở đây mình sẽ show ra output của 3 layer: đường đi, biển báo và vật cản, các bạn có thể thấy là nó mặc dù có thể "nhìn được" nhưng chúng chứa một lượng nhiễu rất lớn đến mức không cần thiết (ừ không phải là video bị mờ đâu, đó là output của model đấy):
+
 ![Segmented WCC](images/segmented_wcc.gif)
 
 Vậy giải pháp đưa ra khá đơn giản là chúng ta sẽ kết hợp cả 2 hàm loss này thành một và gọi nó là weighted-iou. Và chúng ta sẽ có một cái đầu ra như thế này đây. Mặc dù nhìn qua bằng mắt thường chúng ta sẽ thấy cả 2 output là khá giống nhau, nhưng nếu nhìn kỹ thì chúng ta dễ dàng nhận thấy rằng output sau khi train bằng hàm loss kết hợp đã có một độ sắc nét cao hơn nhiều so với output lúc đầu, và điều này là rất tốt cho quá trình xử lý phía sau bởi vì chúng ta không cần phải tốn thời gian cũng như là tài nguyên để khử nhiễu nữa
+
 ![Segmented WCC](images/segmented_wcciou.gif)
 
 ### Lane segmentation:
