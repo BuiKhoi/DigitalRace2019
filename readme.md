@@ -32,7 +32,6 @@ Sau khi tìm cách tối ưu hoá mô hình, thì chúng mình cũng đã có đ
 Bọn mình cũng đã thử rất nhiều những model khác nhau, ví dụ như trong video này là Enet, FCN25, Refinenet, tất cả bọn chúng đều được chúng mình optimize và test thử tốc độ, với kết quả các bạn có thể xem được dưới đây, video này được train và test trên data của cuộc đua số 2018-2019, bởi vì lúc làm những cái này bọn mình chưa build xong sân tập chính của cuộc đua số 2019-2020 =)))
 
 ![Lane segmentation](images/lane_segmentation.gif)
-<lane_segmentation>
 
 ### Detection:
 Chúng mình sử dụng tổng cộng là 3 phương pháp detection chung cho cả biển báo và vật cản
@@ -59,7 +58,7 @@ Hình như hết rồi :))) sau này mình có nhớ ra thêm cái gì thì mìn
 Nhận biết được bản đồ là một chuyện, triển khai được nó ra là một chuyện khác, nói riêng về model đánh lái thì bọn mình có ở đây khoảng 4 phương pháp khác nhau để triển khai nó, ví dụ nhé:
 
 ### Ma trận khoảng cách:
-Đây lại là phương pháp được bọn mình sử dụng trong vòng sơ khảo, nói cho dễ hiểu thì, với kết quả segmentation, bọn mình sẽ chiếu một ma trận 12 tia ở 2 bên, để tính khoảng cách từ xe đến lề phải và lề trái của đường đi, dựa vào độ lệch nhau của chúng, bọn mình sẽ tính được răng xe đang lệch qua trái/qua phải bao nhiêu, sau đó thì áp dụng một chút fuzzy logic và PID để tính ra góc rẽ của xe
+Đây lại là phương pháp được bọn mình sử dụng trong vòng sơ khảo, nói cho dễ hiểu thì, với kết quả segmentation, bọn mình sẽ chiếu một ma trận 10 tia ở 2 bên, để tính khoảng cách từ xe đến lề phải và lề trái của đường đi, dựa vào độ lệch nhau của chúng, bọn mình sẽ tính được răng xe đang lệch qua trái/qua phải bao nhiêu, sau đó thì áp dụng một chút fuzzy logic và PID để tính ra góc rẽ của xe
 
 ![Distance matrix](images/6.distance_matrix.gif)
 
@@ -70,7 +69,7 @@ Trong quá trình tìm hiểu về deep reinforcement learing cho phương pháp
 
 Gọi là based vì ở đây không phải là bọn mình dùng Deep Q Learning, bọn mình chỉ sử dụng một cái gọi là "lý thuyết giản lược" của nó, và bọn mình triển khai bằng cách, trong thời gian đầu, mình sẽ cầm remote và lái chiếc xe đó, chiếc xe sẽ thu thập dữ liệu do chính mình lái và học chúng, vậy thì sau này khi nó tự lái, nó cũng lái y chang như thằng chủ của nó đang cầm remote vậy, nó lái giống đến mức anh BTC phải nói rằng "chú lái thì cẩn thận đừng để tông trúng tường" nhưng thật sự lúc đó là xe tự chạy chứ không phải do mình lái =))) Vậy thì đây cũng chỉ là một câu chuyện supervised learning đơn giản thôi.
 
-Để có thể xem về việc working với data của tụi mình thì các bạn có thể xem qua tập data của bọn mình thiết kế, nó rất đơn giản với tên file có dạng "id ảnh"x"tốc độ"x"góc lái", đây cũng chính là nhãn được đưa vào quá trình training để cho model học theo cách mà chhúng ta đánh lái
+Để có thể xem về việc working với data của tụi mình thì các bạn có thể xem qua tập data của bọn mình thiết kế, nó rất đơn giản với tên file có dạng "id ảnh"x"tốc độ"x"góc lái", đây cũng chính là nhãn được đưa vào quá trình training để cho model học theo cách mà chúng ta đánh lái
 
 ![Deep Q](images/7.deep_q_based.png)
 
@@ -81,11 +80,11 @@ Cái này thì cũng nên được gọi là "based" như deep Q ở trên, tạ
 
 Vị trí này thì theo mình là vị trí cua khét nhất của cả 2 map, khi xe mình đang đóng thẳng max speed thì phải hãm lại rất nhanh và rất hay bị chệch làn đường ở đây, bọn mình đã triển khai khả năng hãm xe khi đạt góc lái lớn ở trên toàn bộ bản đồ, nhưng phương pháp này không hiệu quả bởi vì nếu như vậy, bạn có thể thấy là chiếc xe chỉ hãm lại ở trong những vị trí này:
 
-![Turn 1](images/8.hard_turn_1.png)
+![Turn 1](images/8.hard_turn_1.JPG)
 
 Nhưng thật sự thì chiếc xe chỉ nên hãm lại trong những vị trí này:
 
-![Turn 2](images/8.hard_turn_2.png)
+![Turn 2](images/8.hard_turn_2.JPG)
 
 Tại vì, như một chiếc xe bình thưòng thôi, nó chỉ nên hãm lại trước khi vào cua, chứ khi đã vào cua và đang ra cua mà mới hãm lại thì nó sẽ là một cái gì đó rất là "hãm", vậy làm sao để nó biết là nó sắp vào cua để biết đường mà hãm lại, hãy nhìn lại ở trên, chúng ta có model deep Q learning, nó có thể đoán (predict) được rằng lúc nào thì nên bẻ lái, vậy thì chúng ta sẽ rework lại data một tí, model của chúng ta sẽ có 2 output, một output là góc đánh lái trong thời điểm hiện tại (dùng để đánh lái), một output là góc đánh lái trong một khoảng thời gian delta-t tiếp theo, vậy thì chúng ta sẽ tiến hành hãm xe, và tăng tốc xe dựa trên kết quả đánh lái của khoảng thời gian delta-t sau đó, và phương pháp này cho thấy một sự cải tiến rõ rệt khi xe của mình hãm tốc và tăng tốc cực kỳ mượt đếm mức xác suất chệch ra khỏi đường chỉ còn khoảng 1/10, với tốc độ chúng mình test là 35. Để dễ hiểu hơn về ý tưởng ở đây chúng ta có thể xem hình này:
 
@@ -96,7 +95,7 @@ Hãy tưởng tượng rằng xe của chúng ta đang ở điểm màu đỏ, g
 
 Dựa vào trục thời gian như vậy các bạn có thể hiểu được các điểm màu đỏ, vàng, xanh là các điểm mà tại đó, xe của chúng ta sẽ ở các vị trí như sau:
 
-![Predictive explained 2](images/9.predictive_explained_2.jpg)
+![Predictive explained 2](images/9.predictive_explained_2.JPG)
 
 ### Direct image steering:
 Mình xin nói trước là đây là một phương pháp thuộc dạng "chữa cháy" mà mình không khuyên các bạn sử dụng, rằng là tại vì model detect biển báo của chúng mình vừa nói ở trên không có một kết quả như mong đợi, nghĩa là ở 2 cái ngã 3 cuộc đời mà btc giao cho thì bọn mình hầu như không phân biệt được mà phải dựa vào các biển báo để tính ra lối đi, nhưng biển báo lại không chạy, vậy thì làm sao đây, bọn mình đã bỏ qua mô hình segment line đường và bọn mình đáp luôn ảnh thu trực tiếp từ camera để biết đường rẽ :)))), vì nếu làm như thế này, chúng mình sẽ dễ dàng thấy được cỏ ở 2 bên đường để biết là phải rẽ theo hướng nào, nhược điểm của phương pháp này là nó cực kỳ nhạy cảm với sự thay đổi của môi trường, chỉ cần có một bạn nào đứng trước mũi xe là nó bắt đầu hành tung kỳ lạ rồi, nhưng nếu các bạn có muốn tìm một phương pháp chữa cháy thì đây cũng là một cách mà các bạn nên thử.
