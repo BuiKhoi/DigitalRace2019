@@ -1,0 +1,3 @@
+python3 make_segmentation_data.py
+python3 split_training_data.py
+python3 direct_steer_training.py
