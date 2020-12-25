@@ -1,0 +1,49 @@
+{
+    "torch_lane_model_link": "/home/lfb/Desktop/testing/Ultra-Fast-Lane-Detection/",
+    "torch_lane_model_weights": "/home/lfb/Desktop/testing/Ultra-Fast-Lane-Detection/logs/tusimple_2411_full.pth",
+
+    "lane_model_link": "/Saved_Models/Model/lane_fcn_big.json",
+    "lane_model_weight": "/Saved_Models/Weights/fcn_big_01.h5",
+
+    "steer_model_link": "/Saved_Models/Model/steer_conv_1112.json",
+    "steer_model_weight": "/Saved_Models/Weights/steer_conv_1112.h5",
+
+    "path_model_link" : "/Saved_Models/Model/steer_direct_1212.json",
+    "path_model_weight_right" : "/Saved_Models/Weights/steer_direct_1712.2.h5",
+    "path_model_weight_left" : "/Saved_Models/Weights/steer_direct_left_1712.2.h5",
+
+    "predictive_model_link": "/Saved_Models/Model/steer_predictive_1712.json",
+    "predictive_model_weight_left": "/Saved_Models/Weights/steer_predictive_left_1912.3.h5",
+    "predictive_model_weight_right": "/Saved_Models/Weights/steer_predictive_right_1812.h5",
+
+    "course_model_link": "/Saved_Models/Model/unet_course.json",
+    "course_model_weight": "/Saved_Models/Weights/unet_course.h5",
+    
+    "sign_config_path": "/Saved_Models/Sign/yolo_0638/CDS_detection_yolov4_tiny_vram_2gpu_20201218.cfg",
+    "sign_weight_path": "/Saved_Models/Sign/yolo_0638/CDS_detection_yolov4_tiny_vram_2gpu_20201218_best_0818.weights",
+    "sign_meta_path": "/Saved_Models/Sign/yolo_0638/CDS_detection.data",
+
+    "turn_delay": 800,
+    "sign_patience": 3,
+    "sign_detect_interval": 25,
+    "recording": false,
+    "base_speed": 25,
+    "speed_multipiler": 1.0,
+    "speed_reduce_ratio": 0.05,
+    "kP": 1.1,
+    "kI": 0.07,
+    "kD": 20,
+
+    "detection_threshold": 0.7,
+    "constrain_speed": 40,
+    "contrain_angle": 60,
+    "right_side_course": false,
+    "obstacle_avoid_delay": 300,
+    "obstacle_avoid_value": 40,
+    "sign_delay": 1000,
+    "sign_offset": 300,
+    "sign_threshold": 10,
+    "bbox_x_min_size": 25,
+    "bbox_y_min_size": 30,
+    "stop_threshold": 5
+}
