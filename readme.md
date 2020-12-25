@@ -124,7 +124,7 @@ Và mình mong muốn sẽ có một cái simulator nào đó để mình có th
 
 Trong kỳ thi năm nay thì bọn mình cũng chưa đọc kỹ đề nên quên rằng chúng ta sẽ có cái vách ngăn nằm giữa 2 sân thi đấu, tại vì nếu sử dụng cái vách ngăn này để xác định khoảng cách thì bọn mình có thể có hiệu suất rẽ tốt hơn là dùng cái phương pháp củ chuối kia
 
-Các bạn nên sửa lại package của btc một chút để có hiệu suất phanh xe tốt nhất khi gặp biển stop, bọn mình phải đau đầu hẳn 2 ngày khi xe của bọn mình cứ bị trôi mỗi khi stop, sau khi thi xong rồi mình mới được team LHU chỉ cho phương pháp khoá bánh xe cực khét để nâng cao hiệu suất hãm xe, cái này mà biết trước thì ngon :))))
+Các bạn nên sửa lại package của btc một chút để có hiệu suất phanh xe tốt nhất khi gặp biển stop, bọn mình phải đau đầu hẳn 2 ngày khi xe của bọn mình cứ bị trôi mỗi khi stop, sau khi thi xong rồi mình mới được team LHP chỉ cho phương pháp khoá bánh xe cực khét để nâng cao hiệu suất hãm xe, cái này mà biết trước thì ngon :))))
 
 Các bạn nên có một sự quan tâm nhất định về vấn đề dây nhợ, nhất là dây nguồn, Little Fat Boys trong trận đấu cuối cùng của mình đã bị sứt mất sợi dây nguồn khi đang chạy và không có khả năng reset lại xe nữa, mình nghĩ nếu sợi dây đó không sút ra thì bọn mình hoàn toàn có khả năng tiến sâu hơn là top 5 =))) nhưng mà thôi, dù gì cũng là do sự bất cẩn của bọn mình nên cũng không thể trách ai được.
 
