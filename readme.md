@@ -14,7 +14,7 @@ Bọn mình đã sử dụng một model có tuổi đời khá cao là Unet đ�
 
 Nhưng mà để ra được ảnh đầu ra như thế này không phải là một câu chuyện đơn giản, trước đây thì bọn mình chỉ segment ra "đường đi được" và dùng loss là iou, thì mình có được một cái đầu ra khá là đẹp đẽ và sắc nét:
 
-![Road Segmentation](images/road_segmentation.gif)
+![Road Segmentation](images/cam2_1.gif)
 
 Nhưng khi chúng mình bắt đầu thêm những class khác vd như biển bảo hay đường đi được vào để train thì đầu vào của chúng mình thuộc dạng "hên xui", đó là tại vì vấn đề class imbalance khá cao trong dữ liệu train, khi mà với 1000 ảnh thì chúng ta có 1000 cái nhãn của đường đi, 20 ảnh của vật cản và 50 ảnh của biển báo. Vậy nên bọn mình đã đưa ra giải pháp là sử dụng một hàm loss khác, tên là weighted-categorical-crossentropy, các bạn có thể tìm hiểu sâu hơn về hàm loss này nhưng ở đây thì chúng ta sẽ hiểu là đây là một hàm loss có weight cho từng class, vậy thì hiểu nôm na là chúng ta sẽ hướng sự "quan tâm" của quá trình train đến với những cái class có số lượng ít khiến cho chúng khỏi bị "lãng quên".
 
@@ -24,7 +24,7 @@ Sau khi áp dùng hàm loss này thì chúng mình đã có được một outpu
 
 Vậy giải pháp đưa ra khá đơn giản là chúng ta sẽ kết hợp cả 2 hàm loss này thành một và gọi nó là weighted-iou. Và chúng ta sẽ có một cái đầu ra như thế này đây. Mặc dù nhìn qua bằng mắt thường chúng ta sẽ thấy cả 2 output là khá giống nhau, nhưng nếu nhìn kỹ thì chúng ta dễ dàng nhận thấy rằng output sau khi train bằng hàm loss kết hợp đã có một độ sắc nét cao hơn nhiều so với output lúc đầu, và điều này là rất tốt cho quá trình xử lý phía sau bởi vì chúng ta không cần phải tốn thời gian cũng như là tài nguyên để khử nhiễu nữa
 
-![Segmented WCCIOU](images/segmented_wcciou.gif)
+![Segmented WCCIOU](images/cam3_3.gif)
 
 ### Lane segmentation:
 Nhưng nhận biết là một chuyện, chúng ta đang làm dự án về xe tự hành, nghĩa là model của chúng ta phải chạy với tốc độ nhanh nhất có thể, bọn mình có được một kết quả khá tốt với model Segmentation base trên unet mà mình nói ở trên (~30fps) ở trên con máy 6 năm tuổi dùng card 980Ti, nhưng khi đưa vào con hàng TX2 của BTC thì chúng ta có được một tốc độ cực kỳ đáng nể: 5fps ở chế độ mạnh nhất :D, vậy thì việc làm của chúng mình bây giờ là phải tối ưu hoá cái model này nếu muốn tiếp tục sử dụng segmentation. Nhưng mà ở sân của btc thì bài toán không còn dễ dàng như ngày xưa khi chúng ta chỉ cần chạy vào tim đường là được, chúng ta phải chạy ở làn đường bên phải (nếu có) và tất nhiên luật lệ về giữ làn đường cũng nghiêm ngặt hơn, vậy thì chúng mình chuyển từ segment tất cả mọi thứ, sang thành segment lane đường, và đưa biển báo cùng với vật cản sang một model detect khác.
